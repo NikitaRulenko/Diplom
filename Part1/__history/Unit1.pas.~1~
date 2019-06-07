@@ -1,0 +1,77 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, IdBaseComponent, IdComponent,
+  IdTCPConnection, IdTCPClient, IdHTTP, Vcl.ExtCtrls, Vcl.StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    GroupBox1: TGroupBox;
+    LoginEdit: TEdit;
+    PassEdit: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    Button1: TButton;
+    GroupBox2: TGroupBox;
+    Edit3: TEdit;
+    Label3: TLabel;
+    Memo1: TMemo;
+    Edit4: TEdit;
+    Label4: TLabel;
+    GroupBox3: TGroupBox;
+    LogMemo: TMemo;
+    Button2: TButton;
+    Timer1: TTimer;
+    IdHTTP1: TIdHTTP;
+    procedure GetToken;
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+  token:string;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  GetToken;
+end;
+
+procedure TForm1.GetToken;
+var
+  temp: string;
+  response:string;
+begin
+
+
+  try
+    response:=idhttp1.Get('https://oauth.vk.com/token?grant_type=password&client_id=2274003&scope=wall&client_secret=hHbZxrka2uZ6jB1inYsH&username='+LoginEdit.Text+'&password='+PassEdit.text);
+  except
+    logmemo.Lines.Add('ошибка соединения при получении access token');
+
+  end;
+
+  if Pos('token', response)<>0 then begin
+    temp:=copy(response, pos('access_token":"', response), pos('","expires_in', response)-3);
+    delete(temp, 1, 15);
+    token:=temp;
+    logmemo.Lines.Add('token получен');
+  end
+  else
+  begin
+    logmemo.Lines.Add('token не получен');
+  end;
+
+end;
+
+end.
