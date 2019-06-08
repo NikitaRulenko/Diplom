@@ -26,6 +26,7 @@ object Form1: TForm1
     Width = 55
     Height = 13
     Caption = 'ID '#1075#1088#1091#1087#1087#1099':'
+    Visible = False
   end
   object Label4: TLabel
     Left = 304
@@ -60,6 +61,7 @@ object Form1: TForm1
       Top = 51
       Width = 177
       Height = 21
+      PasswordChar = '*'
       TabOrder = 1
     end
     object Button1: TButton
@@ -93,6 +95,7 @@ object Form1: TForm1
     Width = 217
     Height = 21
     TabOrder = 2
+    Visible = False
   end
   object AttachEdit: TEdit
     Left = 376
@@ -103,16 +106,16 @@ object Form1: TForm1
   end
   object GroupBox3: TGroupBox
     Left = 8
-    Top = 520
+    Top = 351
     Width = 617
-    Height = 147
+    Height = 316
     Caption = #1051#1086#1075':'
     TabOrder = 4
     object LogMemo: TMemo
       Left = 16
       Top = 16
       Width = 585
-      Height = 121
+      Height = 297
       TabOrder = 0
     end
   end
@@ -140,7 +143,7 @@ object Form1: TForm1
     Left = 24
     Top = 200
     Width = 265
-    Height = 305
+    Height = 145
     ItemHeight = 13
     TabOrder = 7
   end

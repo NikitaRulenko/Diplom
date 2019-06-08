@@ -111,7 +111,7 @@ begin
   end;
 //  logmemo.Lines.Add(id);
 
-  logmemo.Lines.Add(response);
+  //logmemo.Lines.Add(response);
   Info.Free;
 end;
 
@@ -136,10 +136,24 @@ begin
   end;
 
 procedure TForm1.cmbGroupsClick(Sender: TObject);
+var
+  response:string;
+  groupStat: string;
+  subsCount: string;
+
 begin
 
   //lstStat.Items.Add(cmbGroups.Items.Strings[cmbGroups.ItemIndex]);
   //pars(response,'"id":',',"');
+  try
+    response:=idhttp1.Get('https://api.vk.com/method/stats.get?group_id=182683919&interval=day&intervals_count=1&access_token='+token+'&v=5.95');
+    logmemo.Lines.Add(response);
+    groupStat:=pars(response,'"reach_subscribers":',',"');
+    lstStat.Items.Add('Количество подписчиков: '+groupStat);
+  except
+    logmemo.Lines.Add('Ошибка получения ID поста');
+  end;
+  //response:=https://vk.com/dev/stats.get?params[group_id]=182683919&params[interval]=day&params[intervals_count]=1&params[extended]=0&params[v]=5.95
 end;
 
 procedure TForm1.GetToken;
