@@ -75,7 +75,7 @@ begin
     logmemo.Lines.Add('Ошибка получения ID поста');
   end;
   id:=pars(response,'"id":',',"');
-  //cmbGroups.Items.Add(token);
+  cmbGroups.Items.Add(id);
   sleep(500);
   // Удаляем последний пост
   if length(id)>0 then
@@ -200,10 +200,10 @@ begin
 
         end;      *)
 
-        getGroupName:=pars(response,'"name":"','","');
-        //cmbGroups.Items.Add(getGroupName);
+        getGroupName:=pars(response,'"name":"',',"');
+        cmbGroups.Items.Add(getGroupName);
         id:=pars(response,'"id":',',"');
-        cmbGroups.Items.Add(getGroupName+', id = ('+id+')');
+        cmbGroups.Items.Add(id);
 
 
       except

@@ -200,10 +200,10 @@ begin
 
         end;      *)
 
-        getGroupName:=pars(response,'"name":"','","');
-        //cmbGroups.Items.Add(getGroupName);
+        getGroupName:=pars(response,'"name":"',',"');
+        cmbGroups.Items.Add(getGroupName);
         id:=pars(response,'"id":',',"');
-        cmbGroups.Items.Add(getGroupName+', id = ('+id+')');
+        cmbGroups.Items.Add(id);
 
 
       except

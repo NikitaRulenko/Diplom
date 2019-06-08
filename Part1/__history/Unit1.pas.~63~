@@ -203,7 +203,7 @@ begin
         getGroupName:=pars(response,'"name":"','","');
         //cmbGroups.Items.Add(getGroupName);
         id:=pars(response,'"id":',',"');
-        cmbGroups.Items.Add(getGroupName+', id = ('+id+')');
+        cmbGroups.Items.Add(getGroupName, id);
 
 
       except
