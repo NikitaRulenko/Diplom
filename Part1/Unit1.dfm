@@ -134,6 +134,7 @@ object Form1: TForm1
     ParentBiDiMode = False
     TabOrder = 6
     Text = #1057#1087#1080#1089#1086#1082' '#1074#1072#1096#1080#1093' '#1075#1088#1091#1087#1087
+    OnClick = cmbGroupsClick
   end
   object lstStat: TListBox
     Left = 24

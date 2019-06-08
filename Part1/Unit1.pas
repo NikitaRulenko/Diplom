@@ -35,6 +35,7 @@ type
     procedure StartButtonClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     function  Pars(st,st_begin,st_end:WideString):WideString;
+    procedure cmbGroupsClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -66,6 +67,7 @@ var
   id:string;
   pos1:integer;
   Info: TStringList;
+  group_id: string;
 begin
   timer1.Enabled:=false;
   // Получаем ID последнего поста  
@@ -86,11 +88,16 @@ begin
       logmemo.Lines.Add('Ошибка удаления поста');
     end;
   end;
-  sleep(500);
+  //sleep(500);
   // Создаем новый пост
   try
+
+    //lstStat.Items.Add(cmbGroups.Items.Strings[cmbGroups.ItemIndex]);
+    group_id := pars(cmbGroups.Items.Strings[cmbGroups.ItemIndex],'(',')');
+
     Info := TStringList.Create;
-    Info.Add('owner_id=-'+GroupEdit.text);
+    //Info.Add('owner_id=-'+GroupEdit.text);
+    Info.Add('owner_id=-'+group_id);
     Info.Add('from_group=1');
     Info.Add('access_token='+token);
     Info.Add('message='+messagememo.text);
@@ -128,6 +135,13 @@ begin
     Pars:=st;
   end;
 
+procedure TForm1.cmbGroupsClick(Sender: TObject);
+begin
+
+  //lstStat.Items.Add(cmbGroups.Items.Strings[cmbGroups.ItemIndex]);
+  //pars(response,'"id":',',"');
+end;
+
 procedure TForm1.GetToken;
 var
   temp: string;
@@ -161,45 +175,15 @@ begin
     temp:=copy(response, pos('access_token":"', response), pos('","expires_in', response)-3);
     delete(temp, 1, 15);
     token:=temp;
-    logmemo.Lines.Add('token получен');
+    logmemo.Lines.Add('token получен, Вы авторизованы');
 
     //SMACK DAT SHIT
-    logmemo.Lines.Add(token);
+    //logmemo.Lines.Add(token);
     try
       response:=idhttp1.Get('https://api.vk.com/method/groups.get?extended=1&access_token='+token+'&v=5.95&filter=admin');
-      logmemo.Lines.Add(response);
+      //logmemo.Lines.Add(response);
 
       try
-        (*parser:=TStringlist.Create;
-        parser.Delimiter:=',';
-        parser.DelimitedText:=response;
-        logmemo.Lines.Add(parser); *)
-
-       (* begin
-          pars:=response.split([',']);
-
-          for i:=low(pars) to high(pars) do
-            begin
-
-              lstStat.Items.Add(pars[i]);
-              if i=2 then getGroupName:=pars[i];
-
-            //logmemo.lines.add(pars[i]);
-            end;
-
-          pars1:=getGroupName.Split([':']);
-
-             for i:=low(pars1) to high(pars1) do
-              begin
-
-                lstStat.Items.Add(pars1[i]);
-                if i=1 then getGroupName:=pars1[i];
-                cmbGroups.Items.Add(pars1[i]);
-              //logmemo.lines.add(pars[i]);
-              end;
-
-        end;      *)
-
         getGroupName:=pars(response,'"name":"','","');
         //cmbGroups.Items.Add(getGroupName);
         id:=pars(response,'"id":',',"');
